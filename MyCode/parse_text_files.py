@@ -102,16 +102,10 @@ def transform_file_list(txt_file_path, destitation_path):
             save_as_input(sub_element, destitation_path, ratio)
 
 
-#transform_file_list("/home/student/Documents/LSD/dataset/Fuji_train_list.txt",
- #                   "/home/student/Documents/LSD/dataset/train/Fuji")
-# transform_file_list("/home/student/Documents/LSD/dataset/Fuji_test_list.txt",
-#                     "/home/student/Documents/LSD/dataset/test/Fuji")
-# transform_file_list("/home/student/Documents/LSD/dataset/Fuji_val_list.txt",
-#                     "/home/student/Documents/LSD/dataset/val/Fuji")
-#
-transform_file_list("/home/student/Documents/LSD/dataset/Sony_train_list.txt",
-                     "/home/student/Documents/LSD/dataset/train/Sony")
-# transform_file_list("/home/student/Documents/LSD/dataset/Sony_test_list.txt",
-#                     "/home/student/Documents/LSD/dataset/test/Sony")
-# transform_file_list("/home/student/Documents/LSD/dataset/Sony_val_list.txt",
-#                     "/home/student/Documents/LSD/dataset/val/Sony")
+
+#transform_file_list("/home/student/Documents/LSD/dataset/Sony_train_list.txt",
+ #                    "/home/student/Documents/LSD/dataset/train/Sony")
+transform_file_list("/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/Sony_test_list.txt",
+                     "/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/test/Sony")
+transform_file_list("/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/Sony_val_list.txt",
+                     "/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/val/Sony")
