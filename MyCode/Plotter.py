@@ -6,7 +6,7 @@ class VisdomLinePlotter(object):
     """Plots to Visdom"""
 
     def __init__(self, env_name='main'):
-        self.viz = Visdom(server="http://localhost:")
+        self.viz = Visdom(server="http://localhost", env=env_name)
         self.env = env_name
         self.plots = {}
 

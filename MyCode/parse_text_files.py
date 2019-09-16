@@ -1,6 +1,7 @@
 import numpy as np
 import rawpy
 import torch
+from scipy import signal
 
 
 def pack_raw(raw):
@@ -58,9 +59,11 @@ def make_dictionary(item_list):
     return dictionary
 
 
-def save_as_target(file_path, destination):
+def save_as_target(file_path, destination, apply_median=False):
     with rawpy.imread(file_path) as raw:
         image = raw.postprocess(use_camera_wb=True, half_size=False, no_auto_bright=True, output_bps=16)
+        if apply_median:
+            image = signal.medfilt(image)
         image = np.expand_dims(np.float32(image / 65535.0), axis=0)
         tensor = torch.from_numpy(image)
         destination += "/targets/" + get_name(file_path)
@@ -81,7 +84,7 @@ def remove_duplicates(item_list):
     return list(set([item for sublist in item_list for item in sublist]))
 
 
-def transform_file_list(txt_file_path, destitation_path):
+def transform_file_list(txt_file_path, destitation_path, apply_filter=False):
     files = parse(txt_file_path)
 
     with open(destitation_path + "/correspondence.txt", 'w') as f:
@@ -94,7 +97,7 @@ def transform_file_list(txt_file_path, destitation_path):
 
     dictionary = make_dictionary(result)
     for element in dictionary.items():
-        save_as_target(element[0], destitation_path)
+        save_as_target(element[0], destitation_path, apply_filter)
         for sub_element in element[1]:
             gt_exposure = get_exposure(get_name(element[0]))
             in_exposure = get_exposure(get_name(sub_element))
@@ -102,10 +105,5 @@ def transform_file_list(txt_file_path, destitation_path):
             save_as_input(sub_element, destitation_path, ratio)
 
 
-
-#transform_file_list("/home/student/Documents/LSD/dataset/Sony_train_list.txt",
- #                    "/home/student/Documents/LSD/dataset/train/Sony")
 transform_file_list("/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/Sony_test_list.txt",
-                     "/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/test/Sony")
-transform_file_list("/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/Sony_val_list.txt",
-                     "/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/val/Sony")
+                    "/home/student/Documents/Learning-to-see-in-the-dark-CNN/dataset/test/Sony")
